@@ -7,6 +7,10 @@
 void Connection::operator_start()
 {
     Logging::printAll(sta_color, "Operator Started");
+
+
+void Connection::operator_start()
+{
     operator_socket = socket(AF_UNIX, SOCK_STREAM, 0);
 
     bzero((char *) &operator_sockaddr, sizeof(operator_sockaddr));
@@ -28,6 +32,7 @@ int Connection::operator_accept()
     socklen_t addr_length = sizeof(station_sockaddr);
     int new_connection = accept(operator_socket, (struct sockaddr *) &operator_sockaddr, &addr_length);
 
+
     return new_connection;
 }
 
@@ -37,6 +42,7 @@ void Connection::operator_handle(int connection)
     if(connection == -1)
     {
         Logging::printAll(sta_color, "Failed to Connect");
+
     }
     else
     {
@@ -45,12 +51,15 @@ void Connection::operator_handle(int connection)
     }
     Logging::printAll(sta_color, "Closing Connection");
     close(connection);
+    unlink(SERVER_PATH);
 }
 
 
 void Connection::operate_operator()
 {
     operator_start();
+
+    printf("Started the operator\n");
     auto tp = Threadpool(3);
 
     while(true)
@@ -77,6 +86,7 @@ void Connection::station_start() {
     // Connect server in here
     //socket
     Logging::printAll(sta_color, "Station Started");
+
     station_socket = socket(AF_UNIX,SOCK_STREAM,0);
     bzero((char *) &station_sockaddr, sizeof(station_sockaddr));
     // address of socket
@@ -102,9 +112,11 @@ void Connection::station_handle(int connection) {
 void Connection::operate_station()
 {
     station_start();
+
+    printf("station_connection: %d\n", station_connection);
     station_handle(station_connection);
-    close(station_socket);
     unlink(SERVER_PATH);
+    close(station_socket);
     exit(0);
 }
 
@@ -137,6 +149,19 @@ int Connection::send_data(int connection, T& buffer, int size) {
         Logging::printAll(sta_color, "Sent: ", buffer);
     }
     else Logging::printAll(sta_color, "Failed to Sent");
+Connection::Connection(bool mode) {
+    isOperator = mode;
+}
+
+
+int Connection::send_data(int connection, uint8_t * buffer) {
+    int status = write(connection,buffer, sizeof(buffer));
+
+    if(status > 0)
+    {
+        std::cout << "Message Sent: " << buffer << std::endl;
+    }
+    else std::cout << "Failed to Sent" << std::endl;
 
     return status;
 }
@@ -152,6 +177,8 @@ int Connection::receive_data(int connection) {
     {
         Logging::printAll(sta_color, "Received: ",incoming_buffer);
     }
+    if(status < 0) std::cout << "Failed to Receive" << std::endl;
+    else std::cout << "Message Received: " << incoming_buffer << std::endl;
 
     bzero(incoming_buffer, sizeof(incoming_buffer));
 
@@ -194,6 +221,15 @@ void Connection::use_console(int connection) {
                     close(operator_socket);
                     unlink(SERVER_PATH);
                 }
+            case 1:
+                std::cout << "Sending: ";
+                uint8_t outgoing[256];
+                std::cin >> outgoing;
+                send_data(connection,outgoing);
+                break;
+            case 2:
+                receive_data(connection);
+                break;
             default:
                 run_Condition = 0;
                 break;

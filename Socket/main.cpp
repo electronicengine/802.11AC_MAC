@@ -1,15 +1,10 @@
 #include "connection.h"
-#include "../Builder/ControlFrameBuilder.h"
-#include "../Frames/ControlFrames.h"
+
+#include "logging.h"
 
 int main() {
-    auto conn = Connection(false, Logging::cyan);
-    conn.operate();
-    ControlFrameBuilder builder = ControlFrameBuilder();
-    RTS rts = RTS();
-    builder.buildHeader(rts);
-    std::vector<uint8_t> FCS = {1,2};
-    builder.setFCS(FCS);
-
+    //auto conn = Connection(false);
+    //conn.operate();
+    Logging::printAll(Logging::cyan, "Hello");
     return 0;
 }

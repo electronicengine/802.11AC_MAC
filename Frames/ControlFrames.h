@@ -7,47 +7,55 @@
 
 
 struct RTS : MAC_Header {
-    FrameControl frameControl;
+   
+  FrameControl frameControl;
     uint8_t Duration[2];
     uint8_t RA[6];
     uint8_t TA[6];
 };
 
 struct CTS : MAC_Header {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
     uint8_t Duration[2];
     uint8_t RA[6];
 };
 
 struct ACK : MAC_Header {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
     uint8_t Duration[2];
     uint8_t RA[6];
 };
 
 struct PS_Poll : MAC_Header {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
     uint8_t AID[2];
     uint8_t BSSID[6];
     uint8_t RA[6];
 };
 
 struct CF_END : MAC_Header {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
+
     uint8_t Duration[2];
     uint8_t RA[6];
     uint8_t BSSID[6];
 };
 
 struct CF_END_CF_ACK : MAC_Header {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
     uint8_t Duration[2];
     uint8_t RA[6];
     uint8_t BSSID[6];
 };
 
 struct BlockackAckReq {
-    FrameControl frameControl;
+
+    FrameControl FrameControl;
     uint8_t Duration_ID[2];
     uint8_t RA[6];
     uint8_t TA[6];
@@ -94,7 +102,8 @@ struct STA_Info1 {
 };
 
 struct VHT_NDP {
-    FrameControl frameControl;
+    
+  FrameControl frameControl;
     uint8_t Duration[2];
     uint8_t RA[6];
     uint8_t TA[6];
@@ -107,6 +116,7 @@ struct VHT_NDP {
 
 
 struct BeamformingReportPool {
+  
     FrameControl frameControl;
     uint8_t Duration[2];
     uint8_t RA[6];

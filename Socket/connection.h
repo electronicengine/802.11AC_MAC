@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <string>
+
 #include <iostream>
 #include <vector>
 #include <list>
@@ -24,6 +25,7 @@
 
 #define SERVER_PATH "/tmp/socket_temp"
 #define TRANSMISSON_SIZE    2048
+
 
 class Connection
 {
@@ -48,6 +50,11 @@ public:
     template<typename T>
     int send_data(int connection, T& buffer, int size);
 
+    //Common
+    Connection(bool mode);
+    void operate();
+    void use_console(int connection);
+    int send_data(int connection, uint8_t * buffer);
     int receive_data(int connection);
 
     //Operator

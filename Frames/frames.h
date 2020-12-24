@@ -95,6 +95,9 @@ struct MAC_Frame
 };
 
 struct DataFrame:MAC_Frame
+};
+
+struct DataFrame
 {
     MAC_Header header;
     Frame_Body body;
@@ -102,6 +105,7 @@ struct DataFrame:MAC_Frame
 };
 
 struct ControlFrame:MAC_Frame
+
 {
     MAC_Header header;
     uint8_t  FCS[4];

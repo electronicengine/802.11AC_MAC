@@ -51,7 +51,6 @@ namespace Logging
     void enableLogs();
 
 
-
     enum LogColor
     {
         magenta,
@@ -87,6 +86,7 @@ namespace Logging
     void printAll(LogColor Color, const TAIL&... tail)
     {
         std::ofstream log_file("/tmp/log_file.log", std::ios_base::app);
+
         std::string package = serializer(tail...);
 
         switch (Color)
@@ -97,6 +97,7 @@ namespace Logging
                     std::cout << WHITE << package << std::endl;
                     log_file << "WHITE: " << package << std::endl;
                 }
+                    std::cout << WHITE << package << std::endl;
 
                 break;
             case magenta:
@@ -105,6 +106,7 @@ namespace Logging
                     std::cout << MAGENTA << package << std::endl;
                     log_file << "MAGENTA: " << package << std::endl;
                 }
+                    std::cout << MAGENTA << package << std::endl;
 
                 break;
             case cyan:
@@ -113,6 +115,7 @@ namespace Logging
                     std::cout << CYAN << package << std::endl;
                     log_file << "CYAN: " << package << std::endl;
                 }
+                    std::cout << CYAN << package << std::endl;
 
                 break;
             case red:
@@ -122,6 +125,8 @@ namespace Logging
                     log_file << "RED: " << package << std::endl;
                 }
 
+                    std::cout << RED << package << std::endl;
+
                 break;
             case yellow:
                 if(Logging::ENABLE_YELLOW_LOG)
@@ -130,6 +135,8 @@ namespace Logging
                     log_file << "YELLOW: " << package << std::endl;
                 }
 
+                    std::cout << YELLOW << package << std::endl;
+
                 break;
             case green:
                 if(Logging::ENABLE_GREEN_LOG)
@@ -137,6 +144,7 @@ namespace Logging
                     std::cout << GREEN << package << std::endl;
                     log_file << "GREEN: " << package << std::endl;
                 }
+                    std::cout << GREEN << package << std::endl;
 
                 break;
             case blue:
@@ -145,6 +153,7 @@ namespace Logging
                     std::cout << BLUE << package << std::endl;
                     log_file << "BLUE: " << package << std::endl;
                 }
+                    std::cout << BLUE << package << std::endl;
 
                 break;
             default:
