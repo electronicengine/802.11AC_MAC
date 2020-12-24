@@ -9,7 +9,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include "string.h"
+#include <string>
+
 #include <iostream>
 #include <vector>
 #include <list>
@@ -20,6 +21,11 @@
 #include <netdb.h>
 #include <sys/types.h>
 #include "Threadpool.h"
+#include "logging.h"
+
+#define SERVER_PATH "/tmp/socket_temp"
+#define TRANSMISSON_SIZE    2048
+
 
 class Connection
 {
@@ -32,6 +38,17 @@ public:
     struct sockaddr_un station_sockaddr;
     int station_connection;
     bool isOperator;
+
+    // Common Variables
+    Logging::LogColor sta_color;
+
+    //Common
+    Connection(bool mode, Logging::LogColor color);
+    void operate();
+    void use_console(int connection);
+
+    template<typename T>
+    int send_data(int connection, T& buffer, int size);
 
     //Common
     Connection(bool mode);

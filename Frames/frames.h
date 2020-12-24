@@ -1,6 +1,8 @@
 //
 // Created by cenkerkaraors on 4.12.2020.
 //
+#include <stdint-gcc.h>
+
 #ifndef FRAME_STRUCTURES_FRAMES_H
 #define FRAME_STRUCTURES_FRAMES_H
 
@@ -85,6 +87,14 @@ struct MAC_Frame
     MAC_Header macHeader;
     Frame_Body frameBody;
     uint8_t FCS[4];
+
+    void setHeader(MAC_Header header){ this->macHeader = header; }
+    void setBody(Frame_Body body){ this->frameBody = body; }
+//    void setFcs(std::vector<uint8_t> FCS){ vectorToArray(FCS, this->FCS); }
+
+};
+
+struct DataFrame:MAC_Frame
 };
 
 struct DataFrame
@@ -94,13 +104,15 @@ struct DataFrame
     uint8_t FCS[4];
 };
 
-struct ControlFrame
+struct ControlFrame:MAC_Frame
+
 {
     MAC_Header header;
     uint8_t  FCS[4];
 };
 
-struct ManagementFrames {
+struct ManagementFrames:MAC_Frame
+{
     MAC_Header header;
     Frame_Body body;
     uint8_t FCS[4];
